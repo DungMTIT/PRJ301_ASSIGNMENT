@@ -31,13 +31,11 @@
                 <form action="RepairOrder" method="POST">
                     <a href="CreateOrder"><button class="btnCreate" type="button">Create new Order</button></a>
 
-                    <table>
-                        <tr>
-                            <td colspan="2">Search by MotoID: <input type="text" name="searchText" value="<%= searchText%>">
-                                <button type="submit">Search</button>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="search-row">
+                        <label for="searchText">Search by MotoID:</label>
+                        <input type="text" id="searchText" name="searchText" value="<%= searchText%>">
+                        <button type="submit">Search</button>
+                    </div>
                 </form>
             </div>
 
