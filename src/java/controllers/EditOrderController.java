@@ -68,32 +68,38 @@ public class EditOrderController extends HttpServlet {
             error = "Order ID must be a number.";
         }
 
-        if (error.isEmpty() && (motoId == null || tech == null || des == null || status == null)) {
-            error = "Invalid request.";
-        } else if (error.isEmpty()) {
+        if (error.isEmpty()) {
             motoId = motoId.trim();
             tech = tech.trim();
             des = des.trim();
             status = status.trim();
-
-            if (orderId <= 0) {
-                error = "Order ID must be greater than 0.";
-            } else if (motoId.isEmpty()) {
-                error = "Moto ID is required.";
-            } else if (!motoId.matches("^[0-9]{2}[A-Z0-9]{1,2}[0-9]{4,6}$")) {
-                error = "Invalid Moto ID format.";
-            } else if (tech.isEmpty()) {
-                error = "Technician is required.";
-            } else if (des.isEmpty()) {
-                error = "Description is required.";
-            } else if (des.length() > 255) {
-                error = "Description is too long.";
-            } else if (!(status.equals("PENDING")
-                    || status.equals("PROCESSING")
-                    || status.equals("COMPLETED"))) {
-                error = "Invalid status.";
-            }
+            error = validateEditOrderFields(motoId, tech, des, status, orderId);
         }
+    /** Extracted from doPost() to reduce Cognitive Complexity (was 25, limit 15). */
+    private String validateEditOrderFields(String motoId, String tech, String des, String status, int orderId) {
+        if (orderId <= 0) {
+            return "Order ID must be greater than 0.";
+        }
+        if (motoId.isEmpty()) {
+            return "Moto ID is required.";
+        }
+        if (!motoId.matches("^[0-9]{2}[A-Z0-9]{1,2}[0-9]{4,6}$")) {
+            return "Invalid Moto ID format.";
+        }
+        if (tech.isEmpty()) {
+            return "Technician is required.";
+        }
+        if (des.isEmpty()) {
+            return "Description is required.";
+        }
+        if (des.length() > 255) {
+            return "Description is too long.";
+        }
+        if (!List.of("PENDING", "PROCESSING", "COMPLETED").contains(status)) {
+            return "Invalid status.";
+        }
+        return "";
+    }
 
         if (!error.isEmpty()) {
             RepairOrder order = new RepairOrder();
