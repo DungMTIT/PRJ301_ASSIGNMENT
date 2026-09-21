@@ -8,7 +8,8 @@
 <%@page import="models.Part" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
 
         <title>Parts Edit</title>
